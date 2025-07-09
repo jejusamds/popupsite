@@ -90,6 +90,7 @@ class Popup extends CI_Controller {
     $pop_type      = empty($_POST['pop_type'])     ? '' : $_POST['pop_type'];
     $pop_title     = empty($_POST['pop_title'])    ? '' : $_POST['pop_title'];
     $pop_contents  = empty($_POST['pop_contents']) ? '' : $_POST['pop_contents'];
+    $pop_link      = empty($_POST['pop_link'])     ? '' : $_POST['pop_link'];
     $pop_img       = empty($_POST['pop_img'])      ? '' : $_POST['pop_img'];
     $pop_start     = empty($_POST['pop_start'])    ? '' : $_POST['pop_start'];
     $pop_end       = empty($_POST['pop_end'])      ? '' : $_POST['pop_end'];
@@ -103,6 +104,7 @@ class Popup extends CI_Controller {
     $tpl_vars['POP_TYPE']     = 'pop';
     $tpl_vars['POP_TITLE']    = '';
     $tpl_vars['POP_CONTENTS'] = '';
+    $tpl_vars['POP_LINK']    = '';
     $tpl_vars['POP_START']    = '';
     $tpl_vars['POP_END']      = '';
     $tpl_vars['IS_VIEW']      = 'N';
@@ -118,7 +120,7 @@ class Popup extends CI_Controller {
 
       if(empty($tpl_vars['ERROR'])) {
         $result = $this->popup_model->set_popup(
-          $pop_id, $pop_type, $pop_title, $pop_contents,
+          $pop_id, $pop_type, $pop_title, $pop_contents, $pop_link,
           $pop_img, '0', '0', $pop_start, $pop_end, $pop_order, $is_view, L_USR_ID
         );
         if($result){

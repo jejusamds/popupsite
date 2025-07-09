@@ -57,13 +57,14 @@ class Popup_model extends CI_Model {
   }
 
   function set_popup($pop_id = '', $pop_type = 'pop', $pop_title = '', $pop_contents = '',
-                     $pop_img = '', $pop_left = '0', $pop_top = '0', $pop_start = '', $pop_end = '', $pop_order = 0,
+                     $pop_link = '', $pop_img = '', $pop_left = '0', $pop_top = '0', $pop_start = '', $pop_end = '', $pop_order = 0,
                      $is_view = 'N', $usr_id) {
 
     if(empty($pop_id)){
       if(!empty($pop_type))        $this->db->set('pop_type', $pop_type);
       if(!empty($pop_title))       $this->db->set('pop_title', $pop_title);
       if(!empty($pop_contents))    $this->db->set('pop_contents', $pop_contents);
+      if(!empty($pop_link))        $this->db->set('pop_link', $pop_link);
       if(!empty($pop_img))         $this->db->set('pop_img', $pop_img);
       if(!empty($pop_left))        $this->db->set('pop_left', $pop_left);
       if(!empty($pop_top))         $this->db->set('pop_top', $pop_top);
@@ -79,6 +80,7 @@ class Popup_model extends CI_Model {
       if(!empty($pop_type))        $this->db->set('pop_type', $pop_type);
       if(!empty($pop_title))       $this->db->set('pop_title', $pop_title);
       if(!empty($pop_contents))    $this->db->set('pop_contents', $pop_contents);
+      if(!empty($pop_link))        $this->db->set('pop_link', $pop_link);
       if(!empty($pop_img))         $this->db->set('pop_img', $pop_img);
       if(!empty($pop_left))        $this->db->set('pop_left', $pop_left);
       if(!empty($pop_top))         $this->db->set('pop_top', $pop_top);

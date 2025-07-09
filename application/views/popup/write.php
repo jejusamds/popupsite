@@ -37,7 +37,15 @@
                           <textarea id="pop_contents" name="pop_contents"
                                    class="form-control col-md-12 col-xs-12 ckeditor"
                                    style="height:10em;"
-                                   required="required">{POP_CONTENTS}</textarea>
+                                  required="required">{POP_CONTENTS}</textarea>
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <label for="pop_link">링크</label>
+                          <input type="text" id="pop_link" name="pop_link"
+                                   class="form-control col-md-12 col-xs-12"
+                                   placeholder="http://" value="{POP_LINK}" />
                         </div>
                       </div>
                       <div class="item form-group">
