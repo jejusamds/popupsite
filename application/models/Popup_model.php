@@ -56,8 +56,9 @@ class Popup_model extends CI_Model {
     return $data;
   }
 
-  function set_popup($pop_id = '', $pop_type = 'pop', $pop_title = '', $pop_contents = '', 
-                     $pop_img = '', $pop_left = '0', $pop_top = '0', $is_view = 'N', $usr_id) {
+  function set_popup($pop_id = '', $pop_type = 'pop', $pop_title = '', $pop_contents = '',
+                     $pop_img = '', $pop_left = '0', $pop_top = '0', $pop_start = '', $pop_end = '', $pop_order = 0,
+                     $is_view = 'N', $usr_id) {
 
     if(empty($pop_id)){
       if(!empty($pop_type))        $this->db->set('pop_type', $pop_type);
@@ -67,6 +68,9 @@ class Popup_model extends CI_Model {
       if(!empty($pop_left))        $this->db->set('pop_left', $pop_left);
       if(!empty($pop_top))         $this->db->set('pop_top', $pop_top);
       if(!empty($is_view))         $this->db->set('is_view', $is_view);
+      if(!empty($pop_start))       $this->db->set('pop_start', $pop_start);
+      if(!empty($pop_end))         $this->db->set('pop_end', $pop_end);
+      if(!empty($pop_order))       $this->db->set('pop_order', $pop_order);
       $this->db->set('usr_id', $usr_id);
       return $this->db->insert('geumsa_popup');
     } else {
@@ -79,6 +83,9 @@ class Popup_model extends CI_Model {
       if(!empty($pop_left))        $this->db->set('pop_left', $pop_left);
       if(!empty($pop_top))         $this->db->set('pop_top', $pop_top);
       if(!empty($is_view))         $this->db->set('is_view', $is_view);
+      if(!empty($pop_start))       $this->db->set('pop_start', $pop_start);
+      if(!empty($pop_end))         $this->db->set('pop_end', $pop_end);
+      if(!empty($pop_order))       $this->db->set('pop_order', $pop_order);
       return $this->db->update('geumsa_popup');
     }
   }
@@ -110,6 +117,18 @@ class Popup_model extends CI_Model {
     return $this->db->update("geumsa_popup");
   }
 
+  function get_max_order(){
+    $this->db->select_max('pop_order');
+    $row = $this->db->get('geumsa_popup')->row_array();
+    return empty($row['pop_order']) ? 0 : $row['pop_order'];
+  }
+
+  function update_order($pop_id, $pop_order){
+    $this->db->where('pop_id', $pop_id);
+    $this->db->set('pop_order', $pop_order);
+    return $this->db->update('geumsa_popup');
+  }
+
   public function paging($offset = 0, $per_page, $is_admin = 'Y', $pop_type, $type, $value){
 
     $numrows = 0;
@@ -129,6 +148,9 @@ class Popup_model extends CI_Model {
                 P.pop_left       POS_LEFT,
                 P.pop_top        POS_TOP,
                 P.pop_img        IMG,
+                P.pop_start      START_DATE,
+                P.pop_end        END_DATE,
+                P.pop_order      ORD,
                 P.created        DATE
               FROM geumsa_popup P
               LEFT OUTER JOIN geumsa_users U ON U.usr_id = P.usr_id
@@ -146,7 +168,7 @@ class Popup_model extends CI_Model {
       $sql .= " AND P.$type = ".$this->db->escape((String) $value);
     }
 
-    $sql .= " ORDER BY P.pop_id DESC
+    $sql .= " ORDER BY P.pop_order ASC, P.pop_id DESC
               LIMIT $per_page OFFSET $offset ) ROWS ";
 
     $query = $this->db->query($sql);
