@@ -21,6 +21,7 @@
 
                     <form action="{CURRENT_URL}" method="post" class="form-horizontal form-label-left" novalidate>
                       <input type="hidden" name="pop_id" value="{POP_ID}" />
+                      <input type="hidden" name="pop_img" value="{POP_IMG}" />
                       <div class="item form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <label for="pop_title">타이틀</label>
@@ -63,6 +64,40 @@
                         </div>
                       </div>
                     </form>
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                          <div class="x_title">
+                            <h2>이미지 첨부하기</h2>
+                          </div>
+                          <div class="x_content">
+                            <form action="{BASE_URL}index.php/request/image_upload" class="dropzone" drop-zone="" id="pop-file-dropzone">
+                              <div class="dz-message text-center alert alert-secondary">
+                                <h2><strong>이미지를 이곳에 드롭다운 하시거나 여기를 클릭해 주세요.</strong></h2>
+                                <p>첨부가능한 이미지는 jpg, jpeg, png입니다.</p>
+                              </div>
+                            </form>
+                            <div style="display:none;" class="pop-upload-progress text-center alert alert-info">
+                              <h2><i class="fa fa-refresh fa-spin"></i><strong> 파일을 업로드중 입니다.</strong></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="pop-banner-preview" class="dropzone-previews hide"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center ">
+                      <div class="pop-image-preview">
+                        <img src="" id="pop-preview-img">
+                        <br />
+                        <br />
+                        <br />
+                      </div>
+                    </div>
+
                     <div class="ln_solid"></div>
 
                     <div class="form-group">
@@ -120,6 +155,41 @@
 
       $('.multi.required').on('keyup blur', 'input', function() {
         validator.checkField.apply($(this).siblings().last()[0]);
+      });
+
+      $('#pop-file-dropzone').dropzone({
+        url: "{BASE_URL}index.php/request/image_upload",
+        maxFilesize: 300,
+        paramName: "image",
+        maxThumbnailFilesize: 1,
+        previewsContainer: ".dropzone-previews",
+        init: function() {
+          this.on('success', function(file, json) {
+            var res = JSON.parse(json);
+            if(res.ERROR == 'OK'){
+              $(".pop-upload-progress").hide();
+              $(".pop-image-preview").show();
+
+              var img_name = res.FILENAME;
+              $("input[name='pop_img']").val(res.FILENAME);
+              $("#pop-preview-img").attr("src", "{BASE_URL}index.php/request/image_view/"+img_name+"/temp");
+            } else {
+              $("#pop-file-dropzone").show();
+              $(".pop-upload-progress").hide();
+              alert(res.ERROR_MESSAGE);
+            }
+          });
+
+          this.on('addedfile', function(file) {
+            $("#pop-file-dropzone").hide();
+            $(".pop-upload-progress").show();
+          });
+
+          this.on('drop', function(file) {
+            $("#pop-file-dropzone").hide();
+            $(".pop-upload-progress").show();
+          });
+        }
       });
     </script>
     <!-- /validator -->
