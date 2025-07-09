@@ -90,6 +90,7 @@ class Popup extends CI_Controller {
     $pop_type      = empty($_POST['pop_type'])     ? '' : $_POST['pop_type'];
     $pop_title     = empty($_POST['pop_title'])    ? '' : $_POST['pop_title'];
     $pop_contents  = empty($_POST['pop_contents']) ? '' : $_POST['pop_contents'];
+    $pop_img       = empty($_POST['pop_img'])      ? '' : $_POST['pop_img'];
     $pop_start     = empty($_POST['pop_start'])    ? '' : $_POST['pop_start'];
     $pop_end       = empty($_POST['pop_end'])      ? '' : $_POST['pop_end'];
     $is_view       = empty($_POST['is_view'])      ? 'N' : $_POST['is_view'];
@@ -106,6 +107,7 @@ class Popup extends CI_Controller {
     $tpl_vars['POP_END']      = '';
     $tpl_vars['IS_VIEW']      = 'N';
     $tpl_vars['POP_ORDER']    = 0;
+    $tpl_vars['POP_IMG']      = '';
 
     if(!empty($_POST)){
 
@@ -117,9 +119,13 @@ class Popup extends CI_Controller {
       if(empty($tpl_vars['ERROR'])) {
         $result = $this->popup_model->set_popup(
           $pop_id, $pop_type, $pop_title, $pop_contents,
-          '', '0', '0', $pop_start, $pop_end, $pop_order, $is_view, L_USR_ID
+          $pop_img, '0', '0', $pop_start, $pop_end, $pop_order, $is_view, L_USR_ID
         );
         if($result){
+          if(!empty($pop_img)){
+            @copy(DATA_FILEPATH."/temp/".$pop_img, DATA_FILEPATH."/popup/".$pop_img);
+            @unlink(DATA_FILEPATH."/temp/".$pop_img);
+          }
           $tpl_vars['REDIRECT_URL'] = base_url()."index.php/manager/popup/index";
           $tpl_vars['ERROR_MESSAGE'] = "저장되었습니다.";
           $this->parser->parse('errors/redirect', $tpl_vars);
