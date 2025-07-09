@@ -34,7 +34,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <label for="pop_contents">내용</label>
                           <textarea id="pop_contents" name="pop_contents"
-                                   class="form-control col-md-12 col-xs-12"
+                                   class="form-control col-md-12 col-xs-12 ckeditor"
                                    style="height:10em;"
                                    required="required">{POP_CONTENTS}</textarea>
                         </div>
@@ -42,11 +42,11 @@
                       <div class="item form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <label for="pop_start">시작일</label>
-                          <input type="text" id="pop_start" name="pop_start" class="form-control" value="{POP_START}" />
+                          <input type="text" id="pop_start" name="pop_start" class="form-control datepicker" value="{POP_START}" />
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <label for="pop_end">종료일</label>
-                          <input type="text" id="pop_end" name="pop_end" class="form-control" value="{POP_END}" />
+                          <input type="text" id="pop_end" name="pop_end" class="form-control datepicker" value="{POP_END}" />
                         </div>
                       </div>
                       <div class="item form-group">
@@ -90,7 +90,23 @@
           location.replace("{BASE_URL}index.php/manager/popup/index");
         });
 
+        $('#pop_start').daterangepicker({
+          singleDatePicker: true,
+          timePicker: true,
+          timePicker24Hour: true,
+          locale: { format: 'YYYY-MM-DD HH:mm:ss' }
+        });
+
+        $('#pop_end').daterangepicker({
+          singleDatePicker: true,
+          timePicker: true,
+          timePicker24Hour: true,
+          locale: { format: 'YYYY-MM-DD HH:mm:ss' }
+        });
+
         $("#save").click(function(){
+          var contents = CKEDITOR.instances.pop_contents.getData();
+          $('#pop_contents').val(contents);
           $('form').submit();
           return false;
         });
