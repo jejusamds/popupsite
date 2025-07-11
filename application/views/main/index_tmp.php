@@ -1,27 +1,27 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script type="text/javascript" language="javascript">
-		$(function() {
-			// 팝업 쿠키체크
-			if( getCookie("close_event01")){
-				$("#pop_event01").hide();
-			}else{
-				$("#pop_event01").show();
-				
-				// 팝업 이벤트 슬라이드
-				pop_event_slide = new Swiper ('.pop_event_slide', {
-					slidesPerView: 'auto',
-					autoplay: {
-						delay: 4000,
-						disableOnInteraction: false,
-					},
-					speed: 1500,
-					loop: true,
-					observer: true,
-					observeParents: true,
-				});
-			}
-		});
+                $(function() {
+                        {POPUP_ROWS}
+                        if( getCookie("close_{POP_ID}")){
+                                $("#pop_{POP_ID}").hide();
+                        }else{
+                                $("#pop_{POP_ID}").show();
+                        }
+                        {/POPUP_ROWS}
+
+                        pop_event_slide = new Swiper ('.pop_event_slide', {
+                                slidesPerView: 'auto',
+                                autoplay: {
+                                        delay: 4000,
+                                        disableOnInteraction: false,
+                                },
+                                speed: 1500,
+                                loop: true,
+                                observer: true,
+                                observeParents: true,
+                        });
+                });
 		
 		function setCookie( name, value, expiredays ){
 			var todayDate = new Date();
@@ -90,46 +90,46 @@
 		}
 	</style>
 		
-	 <div id="pop_event01" class="pop_event">
-		<div class="contents_con">
-			<div class="slide_con">
-				<div class="swiper-container pop_event_slide">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
-							<a href="javascript:void(0);">
-								<img src="/web/img/test_img.png" />
-							</a>
-						</div>
-						<div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
-							<a href="javascript:void(0);">
-								<img src="/web/img/test_img.png" />
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
+        {POPUP_ROWS}
+        <div id="pop_{POP_ID}" class="pop_event">
+                <div class="contents_con">
+                        <div class="slide_con">
+                                <div class="swiper-container pop_event_slide">
+                                        <div class="swiper-wrapper">
+                                                <div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
+                                                        <a href="{POP_LINK}">
+                                                                {if POP_IMG_URL}
+                                                                <img src="{POP_IMG_URL}" />
+                                                                {/if}
+                                                                {POP_CONTENTS}
+                                                        </a>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
 
-			<div class="btn_con">
-				<table cellpadding="0" cellspacing="0">
-					<tr>
-						<td align="left" class="close_td01">
-							<label>
-								<input type="checkbox" name="notice" onClick="closeWin('event01')" />
-								<span>
-									오늘 하루 동안 열지 않음
-								</span>
-							</label>
-						</td>
-						<td align="right" class="close_td02">
-							<a href="javascript:closeWinNo('event01');">
-								창닫기
-							</a>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
+                        <div class="btn_con">
+                                <table cellpadding="0" cellspacing="0">
+                                        <tr>
+                                                <td align="left" class="close_td01">
+                                                        <label>
+                                                                <input type="checkbox" name="notice" onClick="closeWin('{POP_ID}')" />
+                                                                <span>
+                                                                        오늘 하루 동안 열지 않음
+                                                                </span>
+                                                        </label>
+                                                </td>
+                                                <td align="right" class="close_td02">
+                                                        <a href="javascript:closeWinNo('{POP_ID}');">
+                                                                창닫기
+                                                        </a>
+                                                </td>
+                                        </tr>
+                                </table>
+                        </div>
+                </div>
+        </div>
+        {/POPUP_ROWS}
   
   
   <!-- 메인슬라이드 (일감꺼 빼겨옴)-->
