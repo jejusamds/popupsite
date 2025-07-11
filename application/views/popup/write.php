@@ -32,7 +32,7 @@
                             </div>
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label for="pop_contents">내용</label>
+                                    <label for="pop_contents">내용 <span style="color:red;">* 이미지 첨부만 해주세요.(500px * 600px)</span></label>
                                     <textarea id="pop_contents" name="pop_contents"
                                         class="form-control col-md-12 col-xs-12" style="height:10em;"
                                         required="required">{POP_CONTENTS}</textarea>
