@@ -62,6 +62,22 @@ class Main extends CI_Controller {
       $tpl_vars['GALLERY_ROWS'][$k] = $v;
     }
 
+    $popup_rows = $this->popup_model->get_popup('array', '*', '', '', 'N');
+    $tpl_vars['POPUP_ROWS'] = array();
+    $now = date('Y-m-d H:i:s');
+    foreach($popup_rows as $k => $v){
+      if((empty($v['pop_start']) || $v['pop_start'] <= $now) &&
+         (empty($v['pop_end']) || $v['pop_end'] >= $now)){
+        $v = array_change_key_case($v, CASE_UPPER);
+        if(!empty($v['POP_IMG'])){
+          $v['POP_IMG_URL'] = base_url().'index.php/request/image_view/'.$v['POP_IMG'].'/popup';
+        } else {
+          $v['POP_IMG_URL'] = '';
+        }
+        $tpl_vars['POPUP_ROWS'][] = $v;
+      }
+    }
+
     $this->parser->parse("layouts/common/header", $tpl_vars);
     $this->parser->parse("main/index", $tpl_vars);
   }
