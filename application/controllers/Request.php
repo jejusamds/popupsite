@@ -49,6 +49,7 @@ class Request extends CI_Controller {
         $config['quality']        = '100%';
         $this->load->library('image_lib');
         $this->image_lib->initialize($config);
+        
 
         if($this->image_lib->resize()){
 
@@ -64,6 +65,7 @@ class Request extends CI_Controller {
             //Failed RESIZE
             $this->image_lib->clear();
             echo "Failed RESIZE";
+            //echo $this->image_lib->display_errors();
           }
         } else {
           //missmatch MIME-TYPE

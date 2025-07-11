@@ -9,7 +9,8 @@ CKEDITOR.editorConfig = function( config ) {
         // config.language = 'ko';
         // config.uiColor = '#AADC6E';
 
-        config.filebrowserUploadUrl = 'http://uhm.co.kr/geumsa/web/index.php/request/ckeditor_image_upload'; //업로드 실행파일
+        //config.filebrowserUploadUrl = 'http://uhm.co.kr/geumsa/web/index.php/request/ckeditor_image_upload'; //업로드 실행파일
+        config.filebrowserUploadUrl = '/web/index.php/request/ckeditor_image_upload';
         config.toolbar = 'TB';
         config.toolbar_TB =
                 [

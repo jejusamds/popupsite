@@ -65,6 +65,42 @@ class Main extends CI_Controller {
     $this->parser->parse("layouts/common/header", $tpl_vars);
     $this->parser->parse("main/index", $tpl_vars);
   }
+
+  public function index_tmp() {
+
+    $tpl_vars               = array();
+    $tpl_vars['ERROR']      = "";
+    $this->load->model('board_model');
+    $this->load->model('gallery_model');
+    $this->load->model('diet_model');
+
+    $tpl_vars['NOTICE_ROWS'] = array();
+    $tpl_vars['DIET_ROWS'] = array();
+    $tpl_vars['GALLERY_ROWS']  = array();
+
+    $tpl_vars['NOTICE_ROWS']  = $this->board_model->recent_notice();
+    $tpl_vars['DIET_ROWS']    = $this->diet_model->recent_diet();
+    $tpl_vars['GALLERY_ROWS'] = $this->gallery_model->recent_gallery();
+
+    foreach($tpl_vars['NOTICE_ROWS'] as $k => $v){
+      $v['BASE_URL'] = base_url();
+      $v['TITLE'] = mb_strimwidth($v['TITLE'], 0, 20, '..');
+      $tpl_vars['NOTICE_ROWS'][$k] = $v;
+    }
+    foreach($tpl_vars['DIET_ROWS'] as $k => $v){
+      $v['BASE_URL'] = base_url();
+      $v['TITLE'] = mb_strimwidth($v['TITLE'], 0, 20, '..');
+      $tpl_vars['DIET_ROWS'][$k] = $v;
+    }
+    foreach($tpl_vars['GALLERY_ROWS'] as $k => $v){
+      $v['BASE_URL'] = base_url();
+      $v['TITLE'] = mb_strimwidth($v['TITLE'], 0, 20, '..');
+      $tpl_vars['GALLERY_ROWS'][$k] = $v;
+    }
+
+    $this->parser->parse("layouts/common/header", $tpl_vars);
+    $this->parser->parse("main/index_tmp", $tpl_vars);
+  }
   
   function manage_index() {
 
