@@ -34,7 +34,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <label for="pop_contents">내용</label>
                                     <textarea id="pop_contents" name="pop_contents"
-                                        class="form-control col-md-12 col-xs-12 ckeditor" style="height:10em;"
+                                        class="form-control col-md-12 col-xs-12" style="height:10em;"
                                         required="required">{POP_CONTENTS}</textarea>
                                 </div>
                             </div>
@@ -149,6 +149,11 @@
             timePicker: true,
             timePicker24Hour: true,
             locale: { format: 'YYYY-MM-DD HH:mm:ss' }
+        });
+
+        CKEDITOR.replace('pop_contents', {
+            toolbar: [['Image']],
+            filebrowserUploadUrl: '/web/index.php/request/ckeditor_image_upload'
         });
 
         $("#save").click(function () {
