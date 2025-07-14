@@ -84,10 +84,8 @@
                   </li>
                   <li><a href="{BASE_URL}index.php/manager/funeral_gallery/index"><b><i class="fa fa-won"></i>장례식장 이미지 관리 </b></a>
                   </li>
-                  <?php if ($_SERVER['REMOTE_ADDR'] === '112.220.18.234'): ?>
                   <li><a href="{BASE_URL}index.php/manager/popup/index"><b><i class="fa fa-edit"></i> 팝업관리 </b></a>
                   </li>
-                  <?php endif; ?>
                 </ul>
               </div>
 
