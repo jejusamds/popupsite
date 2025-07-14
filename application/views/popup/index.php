@@ -132,22 +132,20 @@
             location.href = "{BASE_URL}index.php/manager/popup/write/" + id;
         });
 
-        $(".order-up").click(function () {
-            var id = $(this).data('id');
-            var order = parseInt($(this).data('order')) - 1;
-            updateOrder(id, order);
-        });
+         $(".order-up").click(function () {
+             var id = $(this).data('id');
+             updateOrder(id, 'up');
+         });
 
-        $(".order-down").click(function () {
-            var id = $(this).data('id');
-            var order = parseInt($(this).data('order')) + 1;
-            updateOrder(id, order);
-        });
+         $(".order-down").click(function () {
+             var id = $(this).data('id');
+             updateOrder(id, 'down');
+         });
 
-        function updateOrder(id, order) {
-            $.post('{BASE_URL}index.php/manager/popup/order', { pop_id: id, pop_order: order }, function (res) {
-                location.reload();
-            }, 'json');
-        }
+         function updateOrder(id, direction) {
+             $.post('{BASE_URL}index.php/manager/popup/order', { pop_id: id, direction: direction }, function (res) {
+                 location.reload();
+             }, 'json');
+         }
     });
 </script>

@@ -185,9 +185,42 @@ class Popup extends CI_Controller {
     if(!defined("L_USR_ID") || L_USR_ID != 'admin') {
       exit;
     }
-    $pop_id = $_POST['pop_id'];
-    $pop_order = $_POST['pop_order'];
-    $this->popup_model->update_order($pop_id, $pop_order);
+
+    $pop_id    = $this->input->post('pop_id');
+    $direction = $this->input->post('direction');
+
+    if(empty($pop_id) || empty($direction)) {
+      echo json_encode(array('ERROR'=>'WA'));
+      return;
+    }
+
+    $current = $this->popup_model->get_popup('row', 'pop_id, pop_order', $pop_id, '', 'Y');
+    if(empty($current)) {
+      echo json_encode(array('ERROR'=>'WA'));
+      return;
+    }
+
+    $cur_order = intval($current['pop_order']);
+    if($direction === 'up') {
+      $neighbor = $this->db->select('pop_id, pop_order')
+                           ->from('geumsa_popup')
+                           ->where('is_delete', 'N')
+                           ->where('pop_order <', $cur_order)
+                           ->order_by('pop_order', 'desc')
+                           ->get()->row_array();
+    } else {
+      $neighbor = $this->db->select('pop_id, pop_order')
+                           ->from('geumsa_popup')
+                           ->where('is_delete', 'N')
+                           ->where('pop_order >', $cur_order)
+                           ->order_by('pop_order', 'asc')
+                           ->get()->row_array();
+    }
+
+    if(!empty($neighbor)) {
+      $this->popup_model->swap_order($current['pop_id'], $neighbor['pop_id']);
+    }
+
     echo json_encode(array('ERROR'=>'OK'));
   }
 }
