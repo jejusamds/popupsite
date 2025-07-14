@@ -133,6 +133,19 @@ class Popup_model extends CI_Model {
     return $this->db->update('geumsa_popup');
   }
 
+  function swap_order($id1, $id2){
+    $row1 = $this->db->select('pop_order')->get_where('geumsa_popup', array('pop_id' => $id1))->row_array();
+    $row2 = $this->db->select('pop_order')->get_where('geumsa_popup', array('pop_id' => $id2))->row_array();
+
+    if(empty($row1) || empty($row2)) return FALSE;
+
+    $this->db->trans_start();
+    $this->db->where('pop_id', $id1)->set('pop_order', $row2['pop_order'])->update('geumsa_popup');
+    $this->db->where('pop_id', $id2)->set('pop_order', $row1['pop_order'])->update('geumsa_popup');
+    $this->db->trans_complete();
+    return $this->db->trans_status();
+  }
+
   public function paging($offset = 0, $per_page, $is_admin = 'Y', $pop_type, $type, $value){
 
     $numrows = 0;
