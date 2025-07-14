@@ -90,7 +90,7 @@
 		}
 	</style>
 		
-	 <div id="pop_event01" class="pop_event">
+	 <!-- <div id="pop_event01" class="pop_event">
 		<div class="contents_con">
 			<div class="slide_con">
 				<div class="swiper-container pop_event_slide">
@@ -101,6 +101,21 @@
 							</a>
 						</div>
 						<div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
+							<a href="javascript:void(0);">
+								<img src="/web/img/test_img.png" />
+							</a>
+						</div>
+                        <div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
+							<a href="javascript:void(0);">
+								<img src="/web/img/test_img.png" />
+							</a>
+						</div>
+                        <div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
+							<a href="javascript:void(0);">
+								<img src="/web/img/test_img.png" />
+							</a>
+						</div>
+                        <div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
 							<a href="javascript:void(0);">
 								<img src="/web/img/test_img.png" />
 							</a>
@@ -129,7 +144,46 @@
 				</table>
 			</div>
 		</div>
-	</div>
+	</div> -->
+
+    <div id="pop_event01" class="pop_event">
+        <div class="contents_con">
+            <div class="slide_con">
+                <div class="swiper-container pop_event_slide">
+                    <div class="swiper-wrapper">
+                        <?php 
+                        foreach ($POPUP_ROWS as $v): 
+                            $pop_link = !empty($v['POP_LINK']) ? $v['POP_LINK'] : 'javascript:void(0);';    
+                            $target_blank = strpos($pop_link, 'http') === 0 ? ' target="_blank"' : '';
+                            ?>
+                            <div class="swiper-slide pop_event_slide_div" data-swiper-autoplay="4000">
+                                <a href="<?= $pop_link ?>" <?= $target_blank ?> >
+                                    <?= $v['POP_CONTENTS'] ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn_con">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="left" class="close_td01">
+                            <label>
+                                <input type="checkbox" name="notice" onClick="closeWin('event01')" />
+                                <span>오늘 하루 동안 열지 않음</span>
+                            </label>
+                        </td>
+                        <td align="right" class="close_td02">
+                            <a href="javascript:closeWinNo('event01');">창닫기</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
   
   
   <!-- 메인슬라이드 (일감꺼 빼겨옴)-->

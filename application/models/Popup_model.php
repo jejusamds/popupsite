@@ -29,7 +29,7 @@ class Popup_model extends CI_Model {
 
     $sql = "SELECT P.*, U.usr_name FROM geumsa_popup P
             LEFT OUTER JOIN geumsa_users U ON U.usr_id = P.usr_id
-            WHERE 1";
+            WHERE 1  AND P.is_delete = 'N' ";
 
     if($is_admin != 'Y'){
       $sql .= " AND P.is_view = 'Y' ";
@@ -43,7 +43,7 @@ class Popup_model extends CI_Model {
       $sql .= " AND P.pop_type = ".$this->db->escape($pop_type);
     }
 
-    $sql .= " ORDER BY P.pop_id DESC ";
+    $sql .= " ORDER BY P.pop_order ASC, P.pop_id DESC ";
 
     $query = $this->db->query($sql);
     if($row_type == 'row'){
@@ -78,9 +78,11 @@ class Popup_model extends CI_Model {
       $this->db->where('pop_id', $pop_id);
       $this->db->set('updated', 'NOW()', FALSE);
       if(!empty($pop_type))        $this->db->set('pop_type', $pop_type);
-      if(!empty($pop_title))       $this->db->set('pop_title', $pop_title);
+      //if(!empty($pop_title))       $this->db->set('pop_title', $pop_title);
+      $this->db->set('pop_title', $pop_title);
       if(!empty($pop_contents))    $this->db->set('pop_contents', $pop_contents);
-      if(!empty($pop_link))        $this->db->set('pop_link', $pop_link);
+      //if(!empty($pop_link))        $this->db->set('pop_link', $pop_link);
+      $this->db->set('pop_link', $pop_link);
       if(!empty($pop_img))         $this->db->set('pop_img', $pop_img);
       if(!empty($pop_left))        $this->db->set('pop_left', $pop_left);
       if(!empty($pop_top))         $this->db->set('pop_top', $pop_top);
